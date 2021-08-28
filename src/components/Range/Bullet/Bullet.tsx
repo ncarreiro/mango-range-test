@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styles from "./Bullet.module.scss";
 
 const config = {
@@ -5,13 +6,17 @@ const config = {
 };
 
 const Bullet = () => {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <div
       data-testid="range-bullet"
       onMouseDown={() => console.log("PRESSED!")}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseOut={() => setIsHovered(false)}
       style={{
-        width: config.size,
-        height: config.size,
+        width: isHovered ? config.size * 1.2 : config.size,
+        height: isHovered ? config.size * 1.2 : config.size,
       }}
       className={styles.rangeBullet}
     />
