@@ -5,18 +5,40 @@ const config = {
   size: 14,
 };
 
-const Bullet = () => {
+const Bullet = ({
+  id,
+  bulletRef,
+  handleMouseDown,
+  getBulletPosition,
+}: {
+  id: string;
+  bulletRef: any;
+  handleMouseDown: (event: any) => void;
+  getBulletPosition: () => { x: number };
+}) => {
   const [isHovered, setIsHovered] = useState(false);
+
+  const pos = getBulletPosition();
+  const valueStyle = { width: "" };
+  valueStyle.width = pos.x + "%";
 
   return (
     <div
-      data-testid="range-bullet"
-      onMouseDown={() => console.log("PRESSED!")}
+      ref={bulletRef}
+      id={id}
+      data-testid={id}
+      onTouchStart={handleMouseDown}
+      onMouseDown={handleMouseDown}
       onMouseEnter={() => setIsHovered(true)}
       onMouseOut={() => setIsHovered(false)}
+      onClick={function (event: any) {
+        event.stopPropagation();
+        event.nativeEvent.stopImmediatePropagation();
+      }}
       style={{
-        width: isHovered ? config.size * 1.2 : config.size,
-        height: isHovered ? config.size * 1.2 : config.size,
+        left: pos.x + "%",
+        width: isHovered ? config.size * 1.5 : config.size,
+        height: isHovered ? config.size * 1.5 : config.size,
       }}
       className={styles.rangeBullet}
     />

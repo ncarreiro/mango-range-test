@@ -1,65 +1,58 @@
-import { useEffect, useState } from "react";
-import styles from "./Value.module.scss";
+import { useState } from "react";
 import ValueInput from "./ValueInput/ValueInput";
+import ValueLabel from "./ValueLabel/ValueLabel";
+import valueStyles from "./Value.module.scss";
 
 const Value = ({
+  id,
   type,
   initialValue,
+  value,
+  onValueChange,
   onValueSubmit,
 }: {
+  id: string;
   type: string;
-  initialValue: string;
-  onValueSubmit: ({ value }: { value: string }) => Promise<any>;
+  initialValue: number;
+  value: number;
+  onValueChange: (value: number) => any;
+  onValueSubmit: (value: number) => any;
 }) => {
-  const [value, setValue] = useState("1");
-  const [oldValue, setOldValue] = useState("");
+  const [oldValue, setOldValue] = useState<number>(0);
 
   const [edit, setEdit] = useState(false);
 
-  useEffect(() => {
-    initialValue && setValue(initialValue);
-  }, [initialValue]);
+  const handleLabelClick = () => {
+    setOldValue(value);
+    setEdit(true);
+  };
 
-  if (type) {
-    return (
-      <div
-        id={`range-value-${type}`}
-        data-testid={`range-value-${type}`}
-        className={styles.rangeValueContainer}
-      >
-        {edit ? (
-          <ValueInput
-            initialValue={initialValue}
-            oldValue={oldValue}
-            setOldValue={setOldValue}
-            setEdit={setEdit}
-            onValueSubmit={({ value }) => onValueSubmit({ value })}
-          />
-        ) : (
-          <div
-            id={`range-value-${type}-text`}
-            data-testid={`range-value-${type}-text`}
-            onClick={() => {
-              setOldValue(value);
-              setEdit(true);
-            }}
-          >
-            <span
-              id={`range-value-${type}-text-value`}
-              data-testid={`range-value-${type}-text-value`}
-            >
-              {value}
-            </span>{" "}
-            €
-          </div>
-        )}
-      </div>
-    );
-  } else {
-    return (
-      <div data-testid="range-value-error">{`ERROR: No type prop passed to <Value />.`}</div>
-    );
-  }
+  const handleValueInputOnSubmit = (value: number) => {
+    setEdit(false);
+    onValueSubmit(value);
+  };
+
+  return (
+    <div id={id} data-testid={id} className={valueStyles.rangeValueContainer}>
+      {edit ? (
+        <ValueInput
+          type={type}
+          initiaValue={oldValue}
+          setOldValue={setOldValue}
+          setEdit={setEdit}
+          onValueSubmit={(value: number) => handleValueInputOnSubmit(value)}
+          onValueChange={(value: number) => onValueChange(value)}
+        />
+      ) : (
+        <ValueLabel
+          type={type}
+          value={value || initialValue}
+          currency="€"
+          handleLabelClick={() => handleLabelClick()}
+        />
+      )}
+    </div>
+  );
 };
 
 export default Value;
