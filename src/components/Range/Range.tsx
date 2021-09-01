@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useRef } from "react";
+import { useRef } from "react";
 
 import { getBulletPosition, getClientPosition } from "./utils";
 
@@ -8,25 +8,23 @@ import Value from "./Value/Value";
 
 interface RangeProps {
   disabled?: boolean;
+  lineSteps: number;
   min: number;
   max: number;
   minBulletX: number;
   maxBulletX: number;
-  lineSteps?: number;
   onValueChange: ({ type, value }: { type: string; value: number }) => void;
   onValueSubmit: ({ type, value }: { type: string; value: number }) => void;
   onBulletDragEnd: () => void;
-  setMinValue: Dispatch<SetStateAction<number>>;
-  setMaxValue: Dispatch<SetStateAction<number>>;
 }
 
 const Range = ({
   disabled = false,
+  lineSteps,
   min,
   max,
   minBulletX,
   maxBulletX,
-  lineSteps = 20,
   onValueChange,
   onValueSubmit,
   onBulletDragEnd,
@@ -49,7 +47,9 @@ const Range = ({
 
     dx = (pos / width) * (max - min);
 
-    const x = (dx !== 0 ? (dx / lineSteps) * lineSteps : 0) + min;
+    const x =
+      (dx !== 0 ? parseInt((dx / lineSteps).toString(), 10) * lineSteps : 0) +
+      min;
 
     onValueChange({
       type: draggingBulletType,

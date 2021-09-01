@@ -19,8 +19,6 @@ const Bullet = ({
   const [isHovered, setIsHovered] = useState(false);
   const bulletPosition = getBulletPosition();
 
-  console.log("bulletPosition: ", bulletPosition);
-
   return (
     <div
       ref={bulletRef}

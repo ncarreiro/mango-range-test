@@ -7,7 +7,7 @@ function App() {
   const [showDebug, setShowDebug] = useState(false);
 
   // Min and Max range values
-  const [minValue, setMinValue] = useState(1);
+  const [minValue, setMinValue] = useState(0);
   const [maxValue, setMaxValue] = useState(10000);
 
   // Min and Max Bullets positions
@@ -56,12 +56,11 @@ function App() {
   return (
     <div className="App">
       <Range
+        lineSteps={1000}
         min={minValue}
         max={maxValue}
         minBulletX={minBulletX}
         maxBulletX={maxBulletX}
-        setMinValue={setMinValue}
-        setMaxValue={setMaxValue}
         onValueChange={handleOnChange}
         onValueSubmit={handleOnSubmit}
         onBulletDragEnd={handleOnDragEnd}
