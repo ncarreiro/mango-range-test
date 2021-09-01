@@ -6,13 +6,11 @@ import valueStyles from "./Value.module.scss";
 const Value = ({
   id,
   type,
-  initialValue,
   value,
   onValueSubmit,
 }: {
   id: string;
   type: string;
-  initialValue: number;
   value: number;
   onValueChange: (value: number) => any;
   onValueSubmit: (value: number) => any;
@@ -33,7 +31,7 @@ const Value = ({
       {edit ? (
         <ValueInput
           type={type}
-          initiaValue={value || initialValue}
+          initiaValue={value}
           setEdit={setEdit}
           onValueSubmit={(value: number) => handleValueInputOnSubmit(value)}
         />

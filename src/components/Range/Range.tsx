@@ -30,8 +30,6 @@ const Range = ({
   onValueChange,
   onValueSubmit,
   onBulletDragEnd,
-  setMinValue,
-  setMaxValue,
 }: RangeProps) => {
   let draggingBulletType: "min" | "max" | "";
 
@@ -136,7 +134,6 @@ const Range = ({
       <Value
         id="range-value-min"
         type="min"
-        initialValue={min}
         value={min}
         onValueChange={(value) => onValueChange({ type: "min", value })}
         onValueSubmit={(value) => onValueSubmit({ type: "min", value })}
@@ -149,9 +146,7 @@ const Range = ({
             handleMouseDown={(event) =>
               handleOnBulletMouseDown({ event, type: "min" })
             }
-            getBulletPosition={() =>
-              getBulletPosition(minBulletX, max, min, maxBulletX, minBulletX)
-            }
+            getBulletPosition={() => getBulletPosition(minBulletX, max, min)}
           />
           <Bullet
             id="range-bullet-max"
@@ -159,16 +154,13 @@ const Range = ({
             handleMouseDown={(event) =>
               handleOnBulletMouseDown({ event, type: "max" })
             }
-            getBulletPosition={() =>
-              getBulletPosition(maxBulletX, max, min, maxBulletX, minBulletX)
-            }
+            getBulletPosition={() => getBulletPosition(maxBulletX, max, min)}
           />
         </Line>
       </div>
       <Value
         id="range-value-max"
         type="max"
-        initialValue={max}
         value={max}
         onValueChange={(value) => onValueChange({ type: "max", value })}
         onValueSubmit={(value) => onValueSubmit({ type: "max", value })}

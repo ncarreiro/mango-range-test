@@ -17,8 +17,9 @@ const Bullet = ({
   getBulletPosition: () => { x: number };
 }) => {
   const [isHovered, setIsHovered] = useState(false);
-
   const bulletPosition = getBulletPosition();
+
+  console.log("bulletPosition: ", bulletPosition);
 
   return (
     <div

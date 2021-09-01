@@ -31,8 +31,7 @@ function App() {
     switch (type) {
       case "min":
         if (value >= maxValue) {
-          const minErrorMessage =
-            "This min value is not valid (same or greater than max)";
+          const minErrorMessage = `ERROR: Min value is bigger than current Max (max: ${maxValue}, new value: ${value})`;
           alert(minErrorMessage);
           return false;
         }
@@ -41,8 +40,7 @@ function App() {
         return true;
       case "max":
         if (value <= minValue) {
-          const maxErrorMessage =
-            "This max value is not valid (same or less than min)";
+          const maxErrorMessage = `ERROR: Max value is smaller than current Min (min: ${minValue}, new value: ${value})`;
           alert(maxErrorMessage);
           return false;
         }
