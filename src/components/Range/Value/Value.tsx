@@ -12,8 +12,8 @@ const Value = ({
   id: string;
   type: string;
   value: number;
-  onValueChange: (value: number) => any;
-  onValueSubmit: (value: number) => any;
+  onValueChange: (value: number) => void;
+  onValueSubmit: (value: number) => void;
 }) => {
   const [edit, setEdit] = useState(false);
 

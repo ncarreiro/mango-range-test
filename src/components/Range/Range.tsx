@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { MouseEvent, TouchEvent, useRef } from "react";
 
 import { getBulletPosition, getClientPosition } from "./utils";
 
@@ -15,7 +15,7 @@ interface RangeProps {
   maxBulletX: number;
   onValueChange: ({ type, value }: { type: string; value: number }) => void;
   onValueSubmit: ({ type, value }: { type: string; value: number }) => void;
-  onBulletDragEnd: () => void;
+  onDragEnd: () => void;
 }
 
 const Range = ({
@@ -27,7 +27,7 @@ const Range = ({
   maxBulletX,
   onValueChange,
   onValueSubmit,
-  onBulletDragEnd,
+  onDragEnd,
 }: RangeProps) => {
   let draggingBulletType: "min" | "max" | "";
 
@@ -38,65 +38,66 @@ const Range = ({
   const bulletRefMin = useRef(null);
   const bulletRefMax = useRef(null);
 
-  const handlePositionChange = ({ pos }: { pos: number }) => {
+  const handleBulletPositionChange = ({ bulletX }: { bulletX: number }) => {
     const { width } = container?.current?.getBoundingClientRect() as DOMRect;
     let dx = 0;
 
-    if (pos < 0) pos = 0;
-    if (pos > width) pos = width;
+    if (bulletX < 0) bulletX = 0;
+    if (bulletX > width) bulletX = width;
 
-    dx = (pos / width) * (max - min);
+    dx = (bulletX / width) * (max - min);
 
-    const x =
+    const xValue =
       (dx !== 0 ? parseInt((dx / lineSteps).toString(), 10) * lineSteps : 0) +
       min;
 
     onValueChange({
       type: draggingBulletType,
-      value: x,
+      value: xValue,
     });
   };
 
-  const getBulletDragPosition = (event: any) => {
-    const clientPos = getClientPosition(event);
-    const pos = clientPos.x + start.current.x - offset.current.x;
+  const getBulletDragPosition = (event: MouseEvent | TouchEvent) => {
+    const clientPos = getClientPosition(
+      event as MouseEvent<HTMLDivElement> & TouchEvent<HTMLDivElement>
+    );
+    const bulletPosition = clientPos.x + start.current.x - offset.current.x;
 
-    return pos;
+    return bulletPosition;
   };
 
-  const handleBulletDrag = (event: any) => {
+  const handleBulletDrag = (event: MouseEvent | TouchEvent) => {
     event.preventDefault();
-    handlePositionChange({ pos: getBulletDragPosition(event) });
+    handleBulletPositionChange({ bulletX: getBulletDragPosition(event) });
   };
 
-  const handleOnBulletDragEnd = (event: any) => {
+  const handleOnBulletDragEnd = (event: Event | (MouseEvent & TouchEvent)) => {
     if (disabled) return;
 
     event.preventDefault();
 
-    document.removeEventListener("mousemove", handleBulletDrag);
+    document.removeEventListener("mousemove", handleBulletDrag as any);
     document.removeEventListener("mouseup", handleOnBulletDragEnd);
-    document.removeEventListener("touchmove", handleBulletDrag);
+    document.removeEventListener("touchmove", handleBulletDrag as any);
     document.removeEventListener("touchend", handleOnBulletDragEnd);
     document.removeEventListener("touchcancel", handleOnBulletDragEnd);
 
     draggingBulletType = "";
 
-    onBulletDragEnd();
+    onDragEnd();
   };
 
   const handleOnBulletMouseDown = ({
     event,
     type,
   }: {
-    event: any;
+    event: MouseEvent | TouchEvent;
     type: "min" | "max";
   }) => {
     if (disabled) return;
 
     event.preventDefault();
     event.stopPropagation();
-    event.nativeEvent.stopImmediatePropagation();
 
     // Setting up Bullet type (min or max)
     draggingBulletType = type;
@@ -104,7 +105,9 @@ const Range = ({
     // Choosing bullet ref by type
     let bulletRef = type === "min" ? bulletRefMin : bulletRefMax;
     const dom = bulletRef.current as any;
-    const clientPos = getClientPosition(event);
+    const clientPos = getClientPosition(
+      event as MouseEvent<HTMLDivElement> & TouchEvent<HTMLDivElement>
+    );
 
     start.current = {
       x: dom.offsetLeft,
@@ -115,9 +118,9 @@ const Range = ({
     };
 
     // Adding Mouse and Touch listeners
-    document.addEventListener("mousemove", handleBulletDrag);
+    document.addEventListener("mousemove", handleBulletDrag as any);
     document.addEventListener("mouseup", handleOnBulletDragEnd);
-    document.addEventListener("touchmove", handleBulletDrag);
+    document.addEventListener("touchmove", handleBulletDrag as any);
     document.addEventListener("touchend", handleOnBulletDragEnd);
     document.addEventListener("touchcancel", handleOnBulletDragEnd);
   };
@@ -134,7 +137,7 @@ const Range = ({
       <Value
         id="range-value-min"
         type="min"
-        value={min}
+        value={minBulletX}
         onValueChange={(value) => onValueChange({ type: "min", value })}
         onValueSubmit={(value) => onValueSubmit({ type: "min", value })}
       />
@@ -143,7 +146,7 @@ const Range = ({
           <Bullet
             id="range-bullet-min"
             bulletRef={bulletRefMin}
-            handleMouseDown={(event) =>
+            handleMouseDown={(event: MouseEvent | TouchEvent) =>
               handleOnBulletMouseDown({ event, type: "min" })
             }
             getBulletPosition={() => getBulletPosition(minBulletX, max, min)}
@@ -151,7 +154,7 @@ const Range = ({
           <Bullet
             id="range-bullet-max"
             bulletRef={bulletRefMax}
-            handleMouseDown={(event) =>
+            handleMouseDown={(event: MouseEvent | TouchEvent) =>
               handleOnBulletMouseDown({ event, type: "max" })
             }
             getBulletPosition={() => getBulletPosition(maxBulletX, max, min)}
@@ -161,7 +164,7 @@ const Range = ({
       <Value
         id="range-value-max"
         type="max"
-        value={max}
+        value={maxBulletX}
         onValueChange={(value) => onValueChange({ type: "max", value })}
         onValueSubmit={(value) => onValueSubmit({ type: "max", value })}
       />

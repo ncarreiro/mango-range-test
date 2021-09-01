@@ -14,20 +14,38 @@ function App() {
   const [minBulletX, setMinBulletX] = useState(minValue);
   const [maxBulletX, setMaxBulletX] = useState(maxValue);
 
-  const handleOnChange = ({ type, value }: { type: string; value: number }) => {
+  const handleOnValueChange = ({
+    type,
+    value,
+  }: {
+    type: string;
+    value: number;
+  }) => {
     switch (type) {
       case "min":
-        if (value > maxBulletX) return;
-        setMinBulletX(Math.trunc(value));
+        if (value > maxBulletX) {
+          setMinBulletX(Math.trunc(maxValue));
+        } else {
+          setMinBulletX(Math.trunc(value));
+        }
         break;
       case "max":
-        if (value < minBulletX) return;
-        setMaxBulletX(Math.trunc(value));
+        if (value < minBulletX) {
+          setMinBulletX(Math.trunc(minValue));
+        } else {
+          setMaxBulletX(Math.trunc(value));
+        }
         break;
     }
   };
 
-  const handleOnSubmit = ({ type, value }: { type: string; value: number }) => {
+  const handleOnValueSubmit = ({
+    type,
+    value,
+  }: {
+    type: string;
+    value: number;
+  }) => {
     switch (type) {
       case "min":
         if (value >= maxValue) {
@@ -61,9 +79,9 @@ function App() {
         max={maxValue}
         minBulletX={minBulletX}
         maxBulletX={maxBulletX}
-        onValueChange={handleOnChange}
-        onValueSubmit={handleOnSubmit}
-        onBulletDragEnd={handleOnDragEnd}
+        onValueChange={handleOnValueChange}
+        onValueSubmit={handleOnValueSubmit}
+        onDragEnd={handleOnDragEnd}
       />
       <button onClick={() => setShowDebug(!showDebug)}>SHOW DEBUG</button>
       {showDebug && (

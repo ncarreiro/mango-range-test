@@ -9,10 +9,10 @@ const ValueInput = ({
 }: {
   type: string;
   initiaValue: number;
-  onValueSubmit: ({ value }: any) => any;
+  onValueSubmit: (value: number) => void;
   setEdit: (state: boolean) => void;
 }) => {
-  const [inputValue, setInputValue] = useState<number | undefined>(0);
+  const [inputValue, setInputValue] = useState<number>(0);
 
   const handleValueOnKeyDown = (event: KeyboardEvent) => {
     if (event.key === "Escape") {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { MouseEvent, RefObject, TouchEvent, useState } from "react";
 import styles from "./Bullet.module.scss";
 
 const config = {
@@ -12,8 +12,8 @@ const Bullet = ({
   getBulletPosition,
 }: {
   id: string;
-  bulletRef: any;
-  handleMouseDown: (event: any) => void;
+  bulletRef: RefObject<HTMLDivElement>;
+  handleMouseDown: (event: MouseEvent | TouchEvent) => void;
   getBulletPosition: () => { x: number };
 }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -28,7 +28,7 @@ const Bullet = ({
       onMouseDown={handleMouseDown}
       onMouseEnter={() => setIsHovered(true)}
       onMouseOut={() => setIsHovered(false)}
-      onClick={function (event: any) {
+      onClick={function (event: MouseEvent & TouchEvent<HTMLDivElement>) {
         event.stopPropagation();
         event.nativeEvent.stopImmediatePropagation();
       }}

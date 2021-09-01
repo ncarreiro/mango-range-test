@@ -1,6 +1,6 @@
 import styles from "./Line.module.scss";
 
-const Line = ({ children }: any) => {
+const Line = ({ children }: { children: JSX.Element | JSX.Element[] }) => {
   return (
     <div id="range-line" data-testid="range-line" className={styles.rangeLine}>
       {children}

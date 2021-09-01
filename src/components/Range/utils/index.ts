@@ -1,4 +1,8 @@
-export const getClientPosition = (event: MouseEvent & TouchEvent) => {
+import { MouseEvent, TouchEvent } from "react";
+
+export const getClientPosition = (
+  event: MouseEvent<HTMLDivElement> & TouchEvent<HTMLDivElement>
+) => {
   const touches = event.touches;
 
   if (touches && touches.length) {
