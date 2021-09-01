@@ -149,7 +149,9 @@ const Range = ({
             handleMouseDown={(event) =>
               handleOnBulletMouseDown({ event, type: "min" })
             }
-            getBulletPosition={() => getBulletPosition(minBulletX, max, min)}
+            getBulletPosition={() =>
+              getBulletPosition(minBulletX, max, min, maxBulletX, minBulletX)
+            }
           />
           <Bullet
             id="range-bullet-max"
@@ -157,7 +159,9 @@ const Range = ({
             handleMouseDown={(event) =>
               handleOnBulletMouseDown({ event, type: "max" })
             }
-            getBulletPosition={() => getBulletPosition(maxBulletX, max, min)}
+            getBulletPosition={() =>
+              getBulletPosition(maxBulletX, max, min, maxBulletX, minBulletX)
+            }
           />
         </Line>
       </div>

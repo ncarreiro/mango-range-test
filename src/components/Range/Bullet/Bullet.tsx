@@ -18,9 +18,7 @@ const Bullet = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
-  const pos = getBulletPosition();
-  const valueStyle = { width: "" };
-  valueStyle.width = pos.x + "%";
+  const bulletPosition = getBulletPosition();
 
   return (
     <div
@@ -36,7 +34,7 @@ const Bullet = ({
         event.nativeEvent.stopImmediatePropagation();
       }}
       style={{
-        left: pos.x + "%",
+        left: bulletPosition.x + "%",
         width: isHovered ? config.size * 1.5 : config.size,
         height: isHovered ? config.size * 1.5 : config.size,
       }}

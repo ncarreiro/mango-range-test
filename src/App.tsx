@@ -3,25 +3,26 @@ import "./App.css";
 import Range from "./components/Range/Range";
 
 function App() {
+  // Debug window
+  const [showDebug, setShowDebug] = useState(false);
+
   // Min and Max range values
   const [minValue, setMinValue] = useState(1);
   const [maxValue, setMaxValue] = useState(10000);
 
-  // Previous Min and Max range values
-  const [prevMinValue, setPrevMinValue] = useState(minValue);
-  const [prevMaxValue, setPrevMaxValue] = useState(maxValue);
-
   // Min and Max Bullets positions
-  const [minBulletX] = useState(minValue);
-  const [maxBulletX] = useState(maxValue);
+  const [minBulletX, setMinBulletX] = useState(minValue);
+  const [maxBulletX, setMaxBulletX] = useState(maxValue);
 
   const handleOnChange = ({ type, value }: { type: string; value: number }) => {
     switch (type) {
       case "min":
-        setMinValue(parseInt(value.toFixed(0)));
+        if (value > maxBulletX) return;
+        setMinBulletX(Math.trunc(value));
         break;
       case "max":
-        setMaxValue(parseInt(value.toFixed(0)));
+        if (value < minBulletX) return;
+        setMaxBulletX(Math.trunc(value));
         break;
     }
   };
@@ -33,29 +34,26 @@ function App() {
           const minErrorMessage =
             "This min value is not valid (same or greater than max)";
           alert(minErrorMessage);
-          setMinValue(prevMinValue);
           return false;
         }
         setMinValue(value);
-        setPrevMinValue(value);
+        setMinBulletX(value);
         return true;
       case "max":
         if (value <= minValue) {
           const maxErrorMessage =
             "This max value is not valid (same or less than min)";
           alert(maxErrorMessage);
-          setMaxValue(prevMaxValue);
           return false;
         }
         setMaxValue(value);
-        setPrevMaxValue(value);
+        setMaxBulletX(value);
         return true;
     }
   };
 
-  const handleOnDragEnd = () => {
-    console.log("handleOnDragEnd:", minBulletX, maxBulletX);
-  };
+  const handleOnDragEnd = () =>
+    console.log("handleOnDragEnd: ", minBulletX, maxBulletX);
 
   return (
     <div className="App">
@@ -70,6 +68,38 @@ function App() {
         onValueSubmit={handleOnSubmit}
         onBulletDragEnd={handleOnDragEnd}
       />
+      <button onClick={() => setShowDebug(!showDebug)}>SHOW DEBUG</button>
+      {showDebug && (
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            padding: 12,
+            fontWeight: 700,
+          }}
+        >
+          <h3>DEBUG VALUES:</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Min</th>
+                <th>Max</th>
+                <th>minBulletX</th>
+                <th>maxBulletX</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{minValue}</td>
+                <td>{maxValue}</td>
+                <td>{minBulletX}</td>
+                <td>{maxBulletX}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }

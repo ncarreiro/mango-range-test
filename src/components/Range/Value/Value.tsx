@@ -8,7 +8,6 @@ const Value = ({
   type,
   initialValue,
   value,
-  onValueChange,
   onValueSubmit,
 }: {
   id: string;
@@ -18,12 +17,9 @@ const Value = ({
   onValueChange: (value: number) => any;
   onValueSubmit: (value: number) => any;
 }) => {
-  const [oldValue, setOldValue] = useState<number>(0);
-
   const [edit, setEdit] = useState(false);
 
   const handleLabelClick = () => {
-    setOldValue(value);
     setEdit(true);
   };
 
@@ -37,16 +33,14 @@ const Value = ({
       {edit ? (
         <ValueInput
           type={type}
-          initiaValue={oldValue}
-          setOldValue={setOldValue}
+          initiaValue={value || initialValue}
           setEdit={setEdit}
           onValueSubmit={(value: number) => handleValueInputOnSubmit(value)}
-          onValueChange={(value: number) => onValueChange(value)}
         />
       ) : (
         <ValueLabel
           type={type}
-          value={value || initialValue}
+          value={value}
           currency="€"
           handleLabelClick={() => handleLabelClick()}
         />
