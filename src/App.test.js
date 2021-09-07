@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
-import App from "./App";
+import MangoRangeApp from "./App";
 
 test("renders Range component", () => {
-  render(<App />);
+  render(<MangoRangeApp />);
   const rangeElement = screen.getByTestId("mango-range-app");
   expect(rangeElement).toBeInTheDocument();
 });

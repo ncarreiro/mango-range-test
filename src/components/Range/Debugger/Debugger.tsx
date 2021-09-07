@@ -1,13 +1,14 @@
 import { useState } from "react";
 
 const Debugger = ({
-  values: { minValue, maxValue, minBulletX, maxBulletX },
+  values: { minValue, maxValue, minBulletX, maxBulletX, rangeValues },
 }: {
   values: {
     minValue: number;
     maxValue: number;
     minBulletX: number;
     maxBulletX: number;
+    rangeValues?: number[];
   };
 }) => {
   // Debug window
@@ -34,6 +35,7 @@ const Debugger = ({
                 <th>Max</th>
                 <th>minBulletX</th>
                 <th>maxBulletX</th>
+                <th>rangeValues</th>
               </tr>
             </thead>
             <tbody>
@@ -42,6 +44,7 @@ const Debugger = ({
                 <td>{maxValue}</td>
                 <td>{minBulletX}</td>
                 <td>{maxBulletX}</td>
+                <td>{JSON.stringify(rangeValues)}</td>
               </tr>
             </tbody>
           </table>

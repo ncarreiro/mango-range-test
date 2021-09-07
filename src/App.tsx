@@ -8,7 +8,7 @@ import "./App.css";
 import Exercise1 from "./views/exercise1";
 import Exercise2 from "./views/exercise2";
 
-function App() {
+function MangoRangeApp() {
   return (
     <div
       id="mango-range-app"
@@ -29,4 +29,4 @@ function App() {
   );
 }
 
-export default App;
+export default MangoRangeApp;

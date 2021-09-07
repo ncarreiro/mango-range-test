@@ -1,6 +1,12 @@
 {
-  "name": "mango-range",
-  "version": "0.1.1",
+  "name": "mango-range-app",
+  "version": "0.2.0",
+  "author": {
+    "name": "Nahuel Carreiro",
+    "email": "nahuelcarreiro@gmail.com",
+    "url": "https://github.com/ncarreiro"
+  },
+  "description": "Range Component App made for Mango Technical Test",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",

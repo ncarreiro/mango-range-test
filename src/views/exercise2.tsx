@@ -17,7 +17,7 @@ const Exercise2 = () => {
   // Min and Max range values
   const [minValue, setMinValue] = useState(0);
   const [maxValue, setMaxValue] = useState(0);
-  const [range, setRange] = useState([]);
+  const [rangeValues, setRangeValues] = useState([]);
 
   // Min and Max Bullets positions
   const [minBulletX, setMinBulletX] = useState(0);
@@ -40,7 +40,7 @@ const Exercise2 = () => {
                 data: { min, max },
               } = valuesResponse;
               const {
-                data: { range: rangeValue },
+                data: { range },
               } = rangeResponse;
 
               if (minValue !== min) {
@@ -53,8 +53,8 @@ const Exercise2 = () => {
                 setMaxBulletX(max);
               }
 
-              if (range !== rangeValue) {
-                setRange(rangeValue);
+              if (rangeValues !== range) {
+                setRangeValues(range);
               }
 
               setLoading(false);
@@ -70,7 +70,7 @@ const Exercise2 = () => {
     maxValue,
     setMinBulletX,
     setMaxBulletX,
-    range,
+    rangeValues,
   ]);
 
   return (
@@ -110,6 +110,7 @@ const Exercise2 = () => {
           maxValue,
           minBulletX,
           maxBulletX,
+          rangeValues,
         }}
       />
     </div>
