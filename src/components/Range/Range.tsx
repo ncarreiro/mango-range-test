@@ -8,7 +8,7 @@ import Value from "./Value/Value";
 
 interface RangeProps {
   disabled?: boolean;
-  lineSteps: number;
+  lineSteps?: number;
   min: number;
   max: number;
   minBulletX: number;
@@ -19,7 +19,7 @@ interface RangeProps {
 
 const Range = ({
   disabled = false,
-  lineSteps,
+  lineSteps = 1,
   min,
   max,
   minBulletX,
