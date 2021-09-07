@@ -15,7 +15,6 @@ interface RangeProps {
   maxBulletX: number;
   onValueChange: ({ type, value }: { type: string; value: number }) => void;
   onValueSubmit: ({ type, value }: { type: string; value: number }) => void;
-  onDragEnd: () => void;
 }
 
 const Range = ({
@@ -27,7 +26,6 @@ const Range = ({
   maxBulletX,
   onValueChange,
   onValueSubmit,
-  onDragEnd,
 }: RangeProps) => {
   let draggingBulletType: "min" | "max" | "";
 
@@ -83,8 +81,6 @@ const Range = ({
     document.removeEventListener("touchcancel", handleOnBulletDragEnd);
 
     draggingBulletType = "";
-
-    onDragEnd();
   };
 
   const handleOnBulletMouseDown = ({

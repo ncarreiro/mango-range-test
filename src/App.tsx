@@ -62,9 +62,6 @@ function App() {
     }
   };
 
-  const handleOnDragEnd = () =>
-    console.log("handleOnDragEnd: ", minBulletX, maxBulletX);
-
   return (
     <div className="App">
       <Range
@@ -75,7 +72,6 @@ function App() {
         maxBulletX={maxBulletX}
         onValueChange={handleOnValueChange}
         onValueSubmit={handleOnValueSubmit}
-        onDragEnd={handleOnDragEnd}
       />
       <button onClick={() => setShowDebug(!showDebug)}>SHOW DEBUG</button>
       {showDebug && (
