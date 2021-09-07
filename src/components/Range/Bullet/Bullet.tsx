@@ -1,4 +1,4 @@
-import { MouseEvent, RefObject, TouchEvent, useState } from "react";
+import { MouseEvent, RefObject, TouchEvent, useEffect, useState } from "react";
 import styles from "./Bullet.module.scss";
 
 const config = {
@@ -17,7 +17,15 @@ const Bullet = ({
   getBulletPosition: () => { x: number };
 }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const bulletPosition = getBulletPosition();
+  const [bulletPosition, setBulletPosition] = useState(0);
+
+  useEffect(() => {
+    setBulletPosition(getBulletPosition().x);
+  }, [getBulletPosition]);
+
+  const handleBulletSize = () => {
+    return isHovered ? config.size * 1.5 : config.size;
+  };
 
   return (
     <div
@@ -33,9 +41,9 @@ const Bullet = ({
         event.nativeEvent.stopImmediatePropagation();
       }}
       style={{
-        left: bulletPosition.x + "%",
-        width: isHovered ? config.size * 1.5 : config.size,
-        height: isHovered ? config.size * 1.5 : config.size,
+        left: bulletPosition + "%",
+        width: handleBulletSize(),
+        height: handleBulletSize(),
       }}
       className={styles.rangeBullet}
     />

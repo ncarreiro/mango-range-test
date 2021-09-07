@@ -7,8 +7,8 @@ function App() {
   const [showDebug, setShowDebug] = useState(false);
 
   // Min and Max range values
-  const [minValue, setMinValue] = useState(0);
-  const [maxValue, setMaxValue] = useState(10000);
+  const [minValue] = useState(0);
+  const [maxValue] = useState(10000);
 
   // Min and Max Bullets positions
   const [minBulletX, setMinBulletX] = useState(minValue);
@@ -23,16 +23,12 @@ function App() {
   }) => {
     switch (type) {
       case "min":
-        if (value > maxBulletX) {
-          setMinBulletX(Math.trunc(maxValue));
-        } else {
+        if (value < maxBulletX) {
           setMinBulletX(Math.trunc(value));
         }
         break;
       case "max":
-        if (value < minBulletX) {
-          setMinBulletX(Math.trunc(minValue));
-        } else {
+        if (value > minBulletX) {
           setMaxBulletX(Math.trunc(value));
         }
         break;
@@ -48,21 +44,19 @@ function App() {
   }) => {
     switch (type) {
       case "min":
-        if (value >= maxValue) {
-          const minErrorMessage = `ERROR: Min value is bigger than current Max (max: ${maxValue}, new value: ${value})`;
+        if (value >= maxBulletX) {
+          const minErrorMessage = `ERROR: New Min value is bigger than current Max value (max: ${maxBulletX}, new value: ${value})`;
           alert(minErrorMessage);
           return false;
         }
-        setMinValue(value);
         setMinBulletX(value);
         return true;
       case "max":
-        if (value <= minValue) {
-          const maxErrorMessage = `ERROR: Max value is smaller than current Min (min: ${minValue}, new value: ${value})`;
+        if (value <= minBulletX) {
+          const maxErrorMessage = `ERROR: New Max value is smaller than current Min value (min: ${minBulletX}, new value: ${value})`;
           alert(maxErrorMessage);
           return false;
         }
-        setMaxValue(value);
         setMaxBulletX(value);
         return true;
     }
