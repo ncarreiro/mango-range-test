@@ -1,6 +1,8 @@
 import { useState } from "react";
-import "./App.css";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Range from "./components/Range/Range";
+
+import "./App.css";
 
 function App() {
   // Debug window
@@ -63,49 +65,100 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <Range
-        lineSteps={1000}
-        min={minValue}
-        max={maxValue}
-        minBulletX={minBulletX}
-        maxBulletX={maxBulletX}
-        onValueChange={handleOnValueChange}
-        onValueSubmit={handleOnValueSubmit}
-      />
-      <button onClick={() => setShowDebug(!showDebug)}>SHOW DEBUG</button>
-      {showDebug && (
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            padding: 12,
-            fontWeight: 700,
-          }}
-        >
-          <h3>DEBUG VALUES:</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Min</th>
-                <th>Max</th>
-                <th>minBulletX</th>
-                <th>maxBulletX</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{minValue}</td>
-                <td>{maxValue}</td>
-                <td>{minBulletX}</td>
-                <td>{maxBulletX}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      )}
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path={["/", "/exercise1"]}>
+          <div className="App">
+            <Range
+              lineSteps={1}
+              min={minValue}
+              max={maxValue}
+              minBulletX={minBulletX}
+              maxBulletX={maxBulletX}
+              onValueChange={handleOnValueChange}
+              onValueSubmit={handleOnValueSubmit}
+            />
+            <button onClick={() => setShowDebug(!showDebug)}>SHOW DEBUG</button>
+            {showDebug && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  padding: 12,
+                  fontWeight: 700,
+                }}
+              >
+                <h3>DEBUG VALUES:</h3>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Min</th>
+                      <th>Max</th>
+                      <th>minBulletX</th>
+                      <th>maxBulletX</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{minValue}</td>
+                      <td>{maxValue}</td>
+                      <td>{minBulletX}</td>
+                      <td>{maxBulletX}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </Route>
+        <Route exact path="/exercise2">
+          <div className="App">
+            <Range
+              lineSteps={1000}
+              min={minValue}
+              max={maxValue}
+              minBulletX={minBulletX}
+              maxBulletX={maxBulletX}
+              onValueChange={handleOnValueChange}
+              onValueSubmit={handleOnValueSubmit}
+            />
+            <button onClick={() => setShowDebug(!showDebug)}>SHOW DEBUG</button>
+            {showDebug && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  padding: 12,
+                  fontWeight: 700,
+                }}
+              >
+                <h3>DEBUG VALUES:</h3>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Min</th>
+                      <th>Max</th>
+                      <th>minBulletX</th>
+                      <th>maxBulletX</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{minValue}</td>
+                      <td>{maxValue}</td>
+                      <td>{minBulletX}</td>
+                      <td>{maxBulletX}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
