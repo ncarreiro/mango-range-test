@@ -7,18 +7,19 @@ const Value = ({
   id,
   type,
   value,
+  editable,
   onValueSubmit,
 }: {
   id: string;
   type: string;
   value: number;
-  onValueChange: (value: number) => void;
+  editable: boolean;
   onValueSubmit: (value: number) => void;
 }) => {
   const [edit, setEdit] = useState(false);
 
   const handleLabelClick = () => {
-    setEdit(true);
+    editable && setEdit(true);
   };
 
   const handleValueInputOnSubmit = (value: number) => {

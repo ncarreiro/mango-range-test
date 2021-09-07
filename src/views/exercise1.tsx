@@ -50,6 +50,7 @@ const Exercise1 = () => {
     <div>
       {loading ? null : (
         <Range
+          minMaxEditable={true}
           min={minValue}
           max={maxValue}
           minBulletX={minBulletX}

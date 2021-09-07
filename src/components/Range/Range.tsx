@@ -15,6 +15,7 @@ interface RangeProps {
   max: number;
   minBulletX: number;
   maxBulletX: number;
+  minMaxEditable?: boolean;
   onValueChange: ({ type, value }: { type: string; value: number }) => void;
   onValueSubmit: ({ type, value }: { type: string; value: number }) => void;
 }
@@ -26,6 +27,7 @@ const Range = ({
   max,
   minBulletX,
   maxBulletX,
+  minMaxEditable = false,
   onValueChange,
   onValueSubmit,
 }: RangeProps) => {
@@ -132,8 +134,8 @@ const Range = ({
       <Value
         id="range-value-min"
         type="min"
+        editable={minMaxEditable}
         value={minBulletX}
-        onValueChange={(value) => onValueChange({ type: "min", value })}
         onValueSubmit={(value) => onValueSubmit({ type: "min", value })}
       />
       <div id="range-container" data-testid="range" ref={container}>
@@ -159,8 +161,8 @@ const Range = ({
       <Value
         id="range-value-max"
         type="max"
+        editable={minMaxEditable}
         value={maxBulletX}
-        onValueChange={(value) => onValueChange({ type: "max", value })}
         onValueSubmit={(value) => onValueSubmit({ type: "max", value })}
       />
     </div>
