@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import Range from "../components/Range/Range";
 import {
   handleOnValueChange,
   handleOnValueSubmit,
 } from "../components/Range/utils";
 
+import Range from "../components/Range/Range";
+import Debugger from "../components/Range/Debugger/Debugger";
+
 const Exercise1 = () => {
-  // Debug window
-  const [showDebug, setShowDebug] = useState(false);
+  // Loading & Fetching state
+  const [loading, setLoading] = useState(true);
+  const [fetching, setFetching] = useState(false);
 
   // Min and Max range values
   const [minValue, setMinValue] = useState(0);
@@ -19,25 +22,33 @@ const Exercise1 = () => {
   const [minBulletX, setMinBulletX] = useState(0);
   const [maxBulletX, setMaxBulletX] = useState(0);
 
-  // HTTP Mockup REST GET for Min and Max values (First Exercise)
+  // HTTP Mockup REST GET for Min and Max values
   useEffect(() => {
-    axios
-      .get("https://demo0572524.mockable.io/mango/exercises/1/values")
-      .then(({ data }) => {
-        if (minValue !== data.min) {
-          setMinValue(data.min);
-          setMinBulletX(data.min);
-        }
-        if (maxValue !== data.max) {
-          setMaxValue(data.max);
-          setMaxBulletX(data.max);
-        }
-      });
-  }, [minValue, maxValue, setMinBulletX, setMaxBulletX]);
+    if (loading && !fetching) {
+      setFetching(true);
+
+      axios
+        .get("https://demo0572524.mockable.io/mango/exercises/1/values")
+        .then(({ data }) => {
+          if (minValue !== data.min) {
+            setMinValue(data.min);
+            setMinBulletX(data.min);
+          }
+
+          if (maxValue !== data.max) {
+            setMaxValue(data.max);
+            setMaxBulletX(data.max);
+          }
+
+          setLoading(false);
+          setFetching(false);
+        });
+    }
+  }, [loading, fetching, minValue, maxValue, setMinBulletX, setMaxBulletX]);
 
   return (
     <div>
-      {minValue && maxValue ? (
+      {loading ? null : (
         <Range
           min={minValue}
           max={maxValue}
@@ -64,39 +75,15 @@ const Exercise1 = () => {
             })
           }
         />
-      ) : null}
-      <button onClick={() => setShowDebug(!showDebug)}>SHOW DEBUG</button>
-      {showDebug && (
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            padding: 12,
-            fontWeight: 700,
-          }}
-        >
-          <h3>DEBUG VALUES:</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Min</th>
-                <th>Max</th>
-                <th>minBulletX</th>
-                <th>maxBulletX</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{minValue}</td>
-                <td>{maxValue}</td>
-                <td>{minBulletX}</td>
-                <td>{maxBulletX}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
       )}
+      <Debugger
+        values={{
+          minValue,
+          maxValue,
+          minBulletX,
+          maxBulletX,
+        }}
+      />
     </div>
   );
 };
