@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styles from "./Debugger.module.scss";
 
 const Debugger = ({
   values: { minValue, maxValue, minBulletX, maxBulletX, rangeValues },
@@ -11,22 +12,13 @@ const Debugger = ({
     rangeValues?: number[];
   };
 }) => {
-  // Debug window
   const [showDebug, setShowDebug] = useState(false);
 
   return (
     <div>
       <button onClick={() => setShowDebug(!showDebug)}>SHOW DEBUG</button>
       {showDebug && (
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            padding: 12,
-            fontWeight: 700,
-          }}
-        >
+        <div className={styles.debugger}>
           <h3>DEBUG VALUES:</h3>
           <table>
             <thead>
@@ -35,7 +27,7 @@ const Debugger = ({
                 <th>Max</th>
                 <th>minBulletX</th>
                 <th>maxBulletX</th>
-                <th>rangeValues</th>
+                <th>Range</th>
               </tr>
             </thead>
             <tbody>

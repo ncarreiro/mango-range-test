@@ -2,7 +2,7 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 // Styles
-import "./App.css";
+import styles from "./App.module.scss";
 
 // Views
 import Exercise1 from "./views/exercise1";
@@ -13,7 +13,7 @@ function MangoRangeApp() {
     <div
       id="mango-range-app"
       data-testid="mango-range-app"
-      className="mango-range-app"
+      className={styles.mangoRangeApp}
     >
       <Router>
         <Switch>

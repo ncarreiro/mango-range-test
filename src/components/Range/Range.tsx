@@ -6,6 +6,8 @@ import Bullet from "./Bullet/Bullet";
 import Line from "./Line/Line";
 import Value from "./Value/Value";
 
+import styles from "./Range.module.scss";
+
 interface RangeProps {
   disabled?: boolean;
   lineSteps?: number;
@@ -125,10 +127,7 @@ const Range = ({
     <div
       id="range-container"
       data-testid="range-container"
-      style={{
-        display: "flex",
-        alignItems: "center",
-      }}
+      className={styles.range}
     >
       <Value
         id="range-value-min"
