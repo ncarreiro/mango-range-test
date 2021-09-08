@@ -1,7 +1,41 @@
-.debugger {
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding: 12;
-    font-weight: 700;
+.debuggerContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 12px;
+
+    .debugger {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        padding: 12;
+        font-weight: 700;
+
+        h3 {
+            margin: 0 0 12px;
+        }
+
+        table,
+        th,
+        td {
+            border: 3px solid #333;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 8px;
+        }
+    }
+
+    .debuggerButton {
+        border: 0;
+        background: #333;
+        color: #fff;
+        padding: 12px;
+        font-weight: 700;
+
+        &:active {
+            background: #555;
+        }
+    }
 }

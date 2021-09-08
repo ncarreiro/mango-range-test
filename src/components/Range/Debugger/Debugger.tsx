@@ -15,11 +15,16 @@ const Debugger = ({
   const [showDebug, setShowDebug] = useState(false);
 
   return (
-    <div>
-      <button onClick={() => setShowDebug(!showDebug)}>SHOW DEBUG</button>
+    <div className={styles.debuggerContainer}>
+      <button
+        className={styles.debuggerButton}
+        onClick={() => setShowDebug(!showDebug)}
+      >
+        SHOW DEBUG
+      </button>
       {showDebug && (
         <div className={styles.debugger}>
-          <h3>DEBUG VALUES:</h3>
+          <h3>Debug values:</h3>
           <table>
             <thead>
               <tr>
@@ -27,7 +32,7 @@ const Debugger = ({
                 <th>Max</th>
                 <th>minBulletX</th>
                 <th>maxBulletX</th>
-                <th>Range</th>
+                {rangeValues && <th>Range</th>}
               </tr>
             </thead>
             <tbody>
@@ -36,7 +41,7 @@ const Debugger = ({
                 <td>{maxValue}</td>
                 <td>{minBulletX}</td>
                 <td>{maxBulletX}</td>
-                <td>{JSON.stringify(rangeValues)}</td>
+                {rangeValues && <td>{JSON.stringify(rangeValues)}</td>}
               </tr>
             </tbody>
           </table>
