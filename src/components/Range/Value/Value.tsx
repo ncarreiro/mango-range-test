@@ -32,7 +32,7 @@ const Value = ({
       {edit ? (
         <ValueInput
           type={type}
-          initiaValue={value}
+          initialValue={value}
           setEdit={setEdit}
           onValueSubmit={(value: number) => handleValueInputOnSubmit(value)}
         />

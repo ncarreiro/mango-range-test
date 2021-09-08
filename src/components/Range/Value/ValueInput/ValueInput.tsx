@@ -3,12 +3,12 @@ import styles from "./ValueInput.module.scss";
 
 const ValueInput = ({
   type,
-  initiaValue,
+  initialValue,
   onValueSubmit,
   setEdit,
 }: {
   type: string;
-  initiaValue: number;
+  initialValue: number;
   onValueSubmit: (value: number) => void;
   setEdit: (state: boolean) => void;
 }) => {
@@ -16,13 +16,13 @@ const ValueInput = ({
 
   const handleValueOnKeyDown = (event: KeyboardEvent) => {
     if (event.key === "Escape") {
-      setInputValue(initiaValue);
+      setInputValue(initialValue);
       setEdit(false);
     }
   };
 
   const handleOnBlur = () => {
-    setInputValue(initiaValue);
+    setInputValue(initialValue);
     setEdit(false);
   };
 
@@ -36,22 +36,19 @@ const ValueInput = ({
   };
 
   return (
-    <div data-testid={`range-value-${type}-input`}>
-      <form onSubmit={handleOnSubmit}>
-        <input
-          autoFocus
-          defaultValue={initiaValue}
-          type="number"
-          onChange={(event) =>
-            handleOnValueChange(parseInt(event.target.value))
-          }
-          onKeyDown={handleValueOnKeyDown}
-          onBlur={handleOnBlur}
-          className={styles.rangeValueInput}
-        />{" "}
-        €
-      </form>
-    </div>
+    <form onSubmit={handleOnSubmit}>
+      <input
+        data-testid={`range-value-${type}-input`}
+        autoFocus
+        defaultValue={initialValue}
+        type="number"
+        onChange={(event) => handleOnValueChange(parseInt(event.target.value))}
+        onKeyDown={handleValueOnKeyDown}
+        onBlur={handleOnBlur}
+        className={styles.rangeValueInput}
+      />{" "}
+      €
+    </form>
   );
 };
 

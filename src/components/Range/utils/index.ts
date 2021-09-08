@@ -20,12 +20,12 @@ export const handleOnValueChange = ({
   switch (type) {
     case "min":
       if (value < maxBulletX) {
-        setMinBulletX(Math.trunc(value));
+        setMinBulletX(value);
       }
       break;
     case "max":
       if (value > minBulletX) {
-        setMaxBulletX(Math.trunc(value));
+        setMaxBulletX(value);
       }
       break;
   }

@@ -29,39 +29,23 @@ const Exercise2 = () => {
       setFetching(true);
 
       axios
-        .all([
-          axios.get("https://demo0572524.mockable.io/mango/exercises/1/values"),
-          axios.get("https://demo0572524.mockable.io/mango/exercises/2/values"),
-        ])
-        .then(
-          axios.spread(
-            (valuesResponse: AxiosResponse, rangeResponse: AxiosResponse) => {
-              const {
-                data: { min, max },
-              } = valuesResponse;
-              const {
-                data: { range },
-              } = rangeResponse;
+        .get("https://demo0572524.mockable.io/mango/exercises/2/values")
+        .then((response: AxiosResponse) => {
+          const {
+            data: { range },
+          } = response;
 
-              if (minValue !== min) {
-                setMinValue(min);
-                setMinBulletX(min);
-              }
+          setMinValue(range[0]);
+          setMinBulletX(range[0]);
 
-              if (maxValue !== max) {
-                setMaxValue(max);
-                setMaxBulletX(max);
-              }
+          setMaxValue(range.at(-1));
+          setMaxBulletX(range.at(-1));
 
-              if (rangeValues !== range) {
-                setRangeValues(range);
-              }
+          setRangeValues(range);
 
-              setLoading(false);
-              setFetching(false);
-            }
-          )
-        );
+          setLoading(false);
+          setFetching(false);
+        });
     }
   }, [
     loading,
@@ -77,11 +61,11 @@ const Exercise2 = () => {
     <div>
       {loading ? null : (
         <Range
-          lineSteps={1000}
           min={minValue}
           max={maxValue}
           minBulletX={minBulletX}
           maxBulletX={maxBulletX}
+          rangeValues={rangeValues}
           onValueChange={({ type, value }) =>
             handleOnValueChange({
               type,

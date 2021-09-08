@@ -10,24 +10,26 @@ import styles from "./Range.module.scss";
 
 interface RangeProps {
   disabled?: boolean;
+  minMaxEditable?: boolean;
   lineSteps?: number;
   min: number;
   max: number;
   minBulletX: number;
   maxBulletX: number;
-  minMaxEditable?: boolean;
+  rangeValues?: number[];
   onValueChange: ({ type, value }: { type: string; value: number }) => void;
   onValueSubmit: ({ type, value }: { type: string; value: number }) => void;
 }
 
 const Range = ({
   disabled = false,
+  minMaxEditable = false,
   lineSteps = 1,
   min,
   max,
   minBulletX,
   maxBulletX,
-  minMaxEditable = false,
+  rangeValues,
   onValueChange,
   onValueSubmit,
 }: RangeProps) => {
@@ -49,13 +51,18 @@ const Range = ({
 
     dx = (bulletX / width) * (max - min);
 
-    const xValue =
-      (dx !== 0 ? parseInt((dx / lineSteps).toString(), 10) * lineSteps : 0) +
-      min;
+    const newBulletPosition = rangeValues
+      ? rangeValues.reduce((prevValue, nextValue) => {
+          return Math.abs(nextValue - bulletX) < Math.abs(prevValue - bulletX)
+            ? nextValue
+            : prevValue;
+        })
+      : (dx !== 0 ? parseInt((dx / lineSteps).toString(), 10) * lineSteps : 0) +
+        min;
 
     onValueChange({
       type: draggingBulletType,
-      value: xValue,
+      value: newBulletPosition,
     });
   };
 
